@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - InstaClone</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="/static/js/config.js"></script>
+     <!-- Main JS -->
+    <script src="/static/js/main.js" defer></script>
+</head>
+<body>
+     <header>
+        <h1>InstaClone</h1>
+        <nav>
+            <a href="/index.html">Timeline</a>
+            <input type="search" id="search-input" placeholder="Search Profile Name...">
+            <div id="search-results"></div>
+            <a href="#" id="profile-link">My Profile</a> <!-- Link updated dynamically -->
+            <button id="logout-button">Logout</button>
+        </nav>
+    </header>
+
+    <main id="profile-page">
+        <section id="profile-header">
+            <h2 id="profile-username">Loading...</h2>
+            <p id="profile-profileName"></p>
+            <div id="profile-stats">
+                <span id="profile-post-count"><strong>-</strong> posts</span>
+                <span><a href="#" id="followers-link"><strong id="profile-followers-count">-</strong> followers</a></span>
+                <span><a href="#" id="following-link"><strong id="profile-following-count">-</strong> following</a></span>
+            </div>
+            <button id="follow-button" style="display: none;">Follow</button>
+             <p id="follow-status"></p>
+        </section>
+
+        <section id="profile-posts">
+            <h3>Posts</h3>
+            <div id="posts-container">
+                <!-- User's posts will be loaded here -->
+                <p>Loading posts...</p>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
