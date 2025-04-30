@@ -43,9 +43,9 @@ This project implements the core features based on typical social media function
 
 **(Add screenshots of key pages like Login, Timeline, Profile, Post Creation etc.)**
 
-*   *Login Page:* ![Login Screenshot]()
-*   *Timeline:* ![Timeline Screenshot]()
-*   *Profile:* ![Profile Screenshot]()
+*   *Login Page:* ![Login Screenshot](https://github.com/user-attachments/assets/96159593-8e0d-4f91-86ce-1d7ec65aa8c7)
+*   *Timeline:* ![Timeline Screenshot](https://github.com/user-attachments/assets/b0d49b66-24d4-400c-a1f0-dd9c97522a47)
+*   *Profile:* ![Profile Screenshot](https://github.com/user-attachments/assets/adb6fcad-52c9-4179-8652-3c07fd837fef)
 
 ## Technology Stack
 
