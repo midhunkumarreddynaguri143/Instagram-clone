@@ -1,0 +1,708 @@
+/* === Global Styles & Resets === */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    background-color: #FAFAFA; /* Instagram's light grey background */
+    color: #262626; /* Standard text color */
+    font-size: 14px; /* Common base font size */
+    line-height: 1.4;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    color: #00376b; /* Standard link color */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+/* === Header === */
+header {
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #DBDBDB; /* Separator line */
+    padding: 0 20px; /* Padding horizontal only */
+    position: sticky;
+    top: 0;
+    z-index: 100; /* Ensure it's above other content */
+    height: 60px; /* Typical header height */
+    display: flex;
+    justify-content: center; /* Center the inner container */
+    align-items: center;
+}
+
+.header-container {
+    max-width: 975px; /* Max width aligns with main content + some padding */
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8em; /* Adjust as needed */
+    font-family: 'Grand Hotel', cursive; /* If you want an Insta-like font, import it */
+     /* Fallback if Grand Hotel isn't loaded */
+    font-family: cursive, sans-serif;
+    font-weight: 400;
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Increased gap */
+}
+
+header nav a, header nav button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600; /* Medium weight for nav items */
+    color: #262626; /* Standard nav link color */
+    text-decoration: none;
+}
+
+header nav a:hover, header nav button:hover {
+    color: #8e8e8e; /* Grey hover for nav items */
+    text-decoration: none;
+}
+
+header nav button#logout-button {
+    color: #ED4956; /* Red for logout */
+}
+header nav button#logout-button:hover {
+    color: #c82a3a; /* Darker red on hover */
+}
+
+
+header nav input[type="search"] {
+    padding: 7px 10px;
+    border: 1px solid #DBDBDB;
+    border-radius: 8px; /* More rounded */
+    background-color: #EFEFEF; /* Light grey background for search */
+    width: 215px; /* Typical search width */
+    font-size: 14px;
+    outline: none;
+}
+header nav input[type="search"]::placeholder {
+    color: #8E8E8E;
+    text-align: left; /* Placeholder alignment */
+}
+
+#search-results {
+    position: absolute;
+    top: 55px; /* Position below the search bar */
+    background-color: white;
+    border: 1px solid #DBDBDB;
+    border-radius: 6px; /* Rounded dropdown */
+    width: 250px; /* Wider dropdown */
+    max-height: 300px; /* Allow more results */
+    overflow-y: auto;
+    z-index: 101; /* Above header */
+    display: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
+}
+#search-results div {
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex; /* For potential icons/images later */
+    align-items: center;
+    font-size: 14px;
+}
+#search-results div:hover {
+    background-color: #FAFAFA; /* Subtle hover */
+}
+
+
+/* === Main Content Area === */
+main {
+    max-width: 935px;
+    margin: 30px auto; /* Increased top margin */
+    padding: 0 20px;
+    display: flex; /* Often a two-column layout */
+    justify-content: center; /* Center content if single column */
+    flex-direction: column;
+    gap: 28px; /* Gap for two-column layout */
+}
+
+/* Basic structure for potential two-column layout */
+.main-content {
+    max-width: 614px; /* Width of feed column */
+    width: 100%;
+}
+.sidebar {
+     max-width: 293px; /* Width of sidebar */
+     width: 100%;
+     /* Hide sidebar for simplicity now, enable later */
+     display: none;
+}
+
+/* Login Page Specific */
+.login-page-container { /* Wrapper for potential footer */
+     padding-top: 50px;
+}
+#login-container {
+    max-width: 350px;
+    margin: 0 auto 10px auto; /* Centered, less top margin now */
+    padding: 35px 40px; /* More padding */
+    border: 1px solid #DBDBDB;
+    background-color: #FFFFFF;
+    text-align: center;
+}
+.login-logo { /* Placeholder for logo */
+    font-family: 'Grand Hotel', cursive;
+    font-family: cursive, sans-serif;
+    font-size: 3em;
+    margin-bottom: 25px;
+    color: #262626;
+}
+#login-container input {
+    display: block;
+    width: 100%; /* Simpler width */
+    margin: 6px auto; /* Less margin */
+    padding: 9px 8px; /* Adjust padding */
+    border: 1px solid #DBDBDB;
+    border-radius: 3px; /* Less rounded */
+    background-color: #FAFAFA; /* Background for inputs */
+    font-size: 12px; /* Smaller font in inputs */
+}
+#login-container button {
+    display: block;
+    width: 100%;
+    margin: 12px auto 12px;
+    padding: 7px; /* Adjust padding */
+    background-color: #0095F6; /* Brighter blue */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600; /* Bold button text */
+    cursor: pointer;
+    font-size: 14px;
+    opacity: 0.85; /* Slightly transparent initially */
+    transition: opacity 0.2s ease;
+}
+#login-container button:hover {
+    background-color: #0095F6;
+    opacity: 1; /* Fully opaque on hover */
+}
+.error-message {
+    color: #ED4956; /* Error red */
+    font-size: 14px;
+    line-height: 1.3;
+    margin-top: 15px;
+}
+
+.signup-link-box { /* Box for "Don't have an account?" */
+     max-width: 350px;
+     margin: 0 auto 20px auto;
+     padding: 20px;
+     border: 1px solid #dbdbdb;
+     background-color: #ffffff;
+     text-align: center;
+     font-size: 14px;
+}
+.signup-link-box a {
+    color: #0095F6;
+    font-weight: 600;
+}
+
+/* Post Creation Card */
+#create-post {
+    background-color: #FFFFFF;
+    border: 1px solid #DBDBDB;
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px;
+    margin-bottom: 24px; /* Standard feed gap */
+}
+#create-post h2 {
+    margin: 0 0 15px 0;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+}
+#post-form div {
+    margin-bottom: 12px;
+}
+#post-form label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 600; /* Bolder labels */
+    font-size: 13px;
+}
+#post-form textarea {
+     width: 100%;
+     padding: 8px 10px;
+     border: 1px solid #DBDBDB;
+     border-radius: 4px;
+     resize: vertical; /* Allow vertical resize */
+     min-height: 60px;
+     font-size: 14px;
+}
+#post-form input[type="file"] {
+    width: 100%;
+     font-size: 14px;
+     color: #262626;
+}
+/* Style file input button (browser dependent) */
+#post-form input[type="file"]::file-selector-button {
+     padding: 6px 12px;
+     border: 1px solid #dbdbdb;
+     border-radius: 4px;
+     background-color: #efefef;
+     font-weight: 600;
+     cursor: pointer;
+     margin-right: 10px;
+     transition: background-color 0.2s ease;
+}
+#post-form input[type="file"]::file-selector-button:hover {
+    background-color: #dbdbdb;
+}
+
+#post-form button[type="submit"] {
+    display: block; /* Center button */
+    margin: 15px auto 0;
+    padding: 8px 20px;
+    background-color: #0095F6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    opacity: 0.85;
+    transition: opacity 0.2s ease;
+}
+#post-form button[type="submit"]:hover {
+    opacity: 1;
+}
+#post-status {
+    margin-top: 15px;
+    font-weight: 600;
+    text-align: center;
+    font-size: 14px;
+}
+
+
+/* === Timeline & Post Display === */
+#timeline-feed, .profile-content { /* Container for posts on timeline or profile */
+    width: 100%;
+}
+.post {
+    background-color: #FFFFFF;
+    border: 1px solid #DBDBDB;
+    border-radius: 8px; /* Consistent rounding */
+    margin-bottom: 24px; /* Spacing between posts */
+    overflow: hidden; /* Contain elements */
+}
+.post-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    font-weight: 600; /* Bold username */
+    font-size: 14px;
+}
+/* Placeholder for avatar */
+.post-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #efefef; /* Placeholder */
+    margin-right: 12px;
+    /* Add background-image: url(...) if you add avatars */
+    background-size: cover;
+    background-position: center;
+    border: 1px solid #dbdbdb;
+}
+
+.post-header a {
+    color: inherit; /* Username inherits default text color */
+}
+.post-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    background-color: #efefef; /* Placeholder bg */
+}
+.post-actions { /* Placeholder for Like/Comment/Share buttons */
+    padding: 8px 16px;
+    display: flex;
+    gap: 16px;
+}
+.post-actions button { /* Basic styling for action icons if implemented */
+     background: none;
+     border: none;
+     padding: 0;
+     font-size: 24px; /* For potential icon fonts */
+}
+
+.post-likes {
+     padding: 0 16px 8px;
+     font-weight: 600;
+     font-size: 14px;
+}
+
+.post-content {
+    padding: 0 16px 8px; /* Adjust padding */
+    font-size: 14px;
+    line-height: 1.35;
+}
+.post-caption strong { /* Username in caption */
+    font-weight: 600;
+    margin-right: 5px;
+}
+.post-date {
+    font-size: 10px; /* Smaller date */
+    color: #8E8E8E;
+    text-transform: uppercase;
+    margin-top: 8px;
+    padding-left: 16px; /* Align with content */
+    padding-bottom: 8px;
+}
+
+/* Comments Section within Post */
+.comments-section {
+    padding: 0 16px 5px; /* Match content padding */
+    border-top: 1px solid #EFEFEF; /* Lighter border */
+    margin-top: 0; /* Remove default margin */
+}
+.comment {
+    margin-bottom: 4px;
+    font-size: 14px;
+    padding: 2px 0;
+    line-height: 1.35;
+}
+.comment strong { /* Username in comment */
+    font-weight: 600; /* Bold username */
+    margin-right: 5px;
+}
+.comment-date {
+     font-size: 12px; /* Slightly larger */
+     color: #8E8E8E;
+     margin-left: 8px; /* More space */
+}
+.expand-comments-button {
+    background: none;
+    border: none;
+    color: #8E8E8E; /* Grey */
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400; /* Normal weight */
+    padding: 8px 0 5px; /* Adjust padding */
+    margin: 0; /* Remove default margins */
+}
+.comment-form {
+    display: flex;
+    margin-top: 5px; /* Less margin */
+    padding: 10px 0; /* Vertical padding only */
+    border-top: 1px solid #EFEFEF;
+    align-items: center;
+}
+.comment-form input[type="text"] {
+    flex-grow: 1;
+    border: none;
+    padding: 0; /* Remove padding */
+    outline: none;
+    font-size: 14px;
+}
+.comment-form input[type="text"]::placeholder {
+     color: #8E8E8E;
+}
+.comment-form button {
+    background: none;
+    border: none;
+    color: #0095F6;
+    font-weight: 600; /* Bolder Post text */
+    cursor: pointer;
+    padding: 0 0 0 10px; /* Left padding only */
+    font-size: 14px;
+    flex-shrink: 0; /* Prevent shrinking */
+    opacity: 0.5; /* Dimmed when disabled */
+    transition: opacity 0.2s ease;
+}
+.comment-form button:not(:disabled) {
+    opacity: 1;
+}
+.comment-form button:disabled {
+    color: #B2DFFC; /* Lighter blue when disabled */
+    cursor: default;
+    opacity: 1; /* Make fully opaque when disabled but blue is lighter */
+}
+
+/* === Profile Page === */
+#profile-page {
+    width: 100%;
+}
+#profile-header {
+    display: flex;
+    align-items: flex-start; /* Align top for bio */
+    margin-bottom: 44px; /* More space */
+    gap: 50px; /* Increase gap */
+    padding-bottom: 0; /* Remove padding */
+    border-bottom: none; /* Remove bottom border here, use below for posts separator */
+}
+
+.profile-avatar-container {
+    flex-basis: 30%; /* Avatar takes space */
+    display: flex;
+    justify-content: center;
+}
+
+.profile-avatar { /* Large circular avatar */
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #efefef; /* Placeholder */
+    /* Add background-image: url(...) if you add avatars */
+    background-size: cover;
+    background-position: center;
+    border: 1px solid #dbdbdb;
+}
+
+.profile-info {
+     flex-basis: 70%;
+     display: flex;
+     flex-direction: column;
+     gap: 20px; /* Space between info rows */
+}
+
+.profile-info-line1 { /* Username and button */
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#profile-username {
+    margin: 0;
+    font-size: 28px; /* Larger username */
+    font-weight: 300; /* Light weight */
+    line-height: 1.2;
+}
+
+#follow-button { /* Primary action button */
+    padding: 5px 9px;
+    font-weight: 600; /* Bold text */
+    cursor: pointer;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    font-size: 14px;
+    background-color: #0095F6;
+    color: white;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+#follow-button.following {
+    background-color: #FFFFFF;
+    color: #262626;
+    border: 1px solid #DBDBDB; /* Add border when following */
+}
+#follow-button:hover:not(.following) {
+     background-color: #19A6F7; /* Slightly different blue on hover */
+}
+#follow-button.following:hover {
+    background-color: #f9f9f9; /* Subtle grey hover */
+}
+
+
+#profile-stats {
+    display: flex;
+    gap: 40px; /* Wider gap for stats */
+    font-size: 16px;
+}
+#profile-stats span {
+    margin-right: 0; /* Remove default margin */
+}
+#profile-stats span a {
+    color: inherit;
+}
+#profile-stats span strong {
+    font-weight: 600; /* Bold counts */
+}
+
+.profile-details { /* Container for name/bio */
+     font-size: 16px;
+}
+#profile-profileName {
+    font-weight: 600; /* Bold Profile Name */
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.4;
+}
+/* Optional Bio Styling */
+.profile-bio {
+     margin-top: 5px;
+     line-height: 1.4;
+}
+
+/* Separator before posts */
+.profile-posts-separator {
+    border-top: 1px solid #DBDBDB;
+    margin-bottom: 20px;
+    /* Add section toggles (Posts/Tagged etc.) here if needed */
+}
+
+/* Profile Posts Grid */
+#profile-posts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px; /* Default Insta gap */
+}
+
+#profile-posts .post {
+    margin-bottom: 0;
+    border: none;
+    position: relative;
+    cursor: pointer; /* Indicate clickable */
+}
+/* Hide details on grid view */
+#profile-posts .post .post-header,
+#profile-posts .post .post-content,
+#profile-posts .post .post-actions,
+#profile-posts .post .post-likes,
+#profile-posts .post .post-date,
+#profile-posts .post .comments-section {
+    display: none;
+}
+#profile-posts .post .post-image img {
+    aspect-ratio: 1 / 1; /* Enforce square */
+    object-fit: cover;
+    border: none; /* Remove inner border */
+    display: block;
+    width: 100%;
+}
+
+/* Optional: Hover effect on profile grid items */
+#profile-posts .post .post-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+#profile-posts .post:hover .post-image::after {
+    opacity: 1;
+}
+/* Style for stats on hover - example */
+/*
+#profile-posts .post .hover-stats {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: 600;
+    display: none; // Shown on hover via JS or pure CSS
+    z-index: 1;
+}
+#profile-posts .post:hover .hover-stats {
+    display: block; // Or flex
+}
+*/
+
+
+/* === User List Page === */
+#user-list-page {
+    max-width: 450px; /* Narrower container */
+    margin: 30px auto;
+    background-color: #ffffff;
+    border: 1px solid #dbdbdb;
+    border-radius: 8px;
+    padding: 0; /* Remove padding, add to children */
+    overflow: hidden;
+}
+#user-list-page h2 {
+    margin: 0;
+    padding: 12px 16px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    text-transform: capitalize;
+    border-bottom: 1px solid #dbdbdb;
+}
+#user-list-container {
+    max-height: 400px; /* Limit height and scroll */
+    overflow-y: auto;
+    padding: 8px 16px; /* Add padding here */
+}
+
+#user-list-container .user-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Push button to right if added */
+    padding: 8px 0; /* Vertical padding only */
+    /* Remove border here, let container handle it */
+    border-bottom: none;
+    gap: 12px;
+}
+.user-list-avatar { /* Small avatar */
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #efefef;
+    border: 1px solid #dbdbdb;
+    flex-shrink: 0; /* Prevent shrinking */
+    /* Add background-image: url(...) */
+    background-size: cover;
+    background-position: center;
+}
+
+#user-list-container .user-details {
+    flex-grow: 1; /* Take available space */
+}
+
+#user-list-container .user-details a {
+    font-weight: 600; /* Bold username */
+    color: #262626;
+    font-size: 14px;
+    display: block; /* Ensure it takes full width */
+}
+#user-list-container .user-details span {
+    display: block;
+    color: #8E8E8E; /* Grey Profile Name */
+    font-size: 14px; /* Consistent size */
+}
+/* Style for optional follow button within the list */
+#user-list-container .user-list-item button {
+    padding: 5px 9px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    font-size: 12px; /* Smaller button in list */
+    background-color: #0095F6;
+    color: white;
+    flex-shrink: 0;
+}
+#user-list-container .user-list-item button.following {
+    background-color: #FFFFFF;
+    color: #262626;
+    border: 1px solid #DBDBDB;
+}
+
+#back-to-profile-link {
+    display: block;
+    text-align: center;
+    padding: 16px;
+    border-top: 1px solid #dbdbdb;
+    font-weight: 600;
+    color: #0095F6;
+}
+#back-to-profile-link:hover {
+     text-decoration: none;
+     color: #00376b;
+}
