@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline - InstaClone</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="/static/js/config.js"></script>
+    <!-- Main JS -->
+    <script src="/static/js/main.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>InstaClone</h1>
+        <nav>
+            <a href="/index.html">Timeline</a>
+            <input type="search" id="search-input" placeholder="Search Profile Name...">
+            <div id="search-results"></div>
+            <a href="#" id="profile-link">My Profile</a>
+            <button id="logout-button">Logout</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="create-post">
+            <h2>Create New Post</h2>
+            <form id="post-form">
+                <div>
+                    <label for="post-caption">Caption:</label>
+                    <textarea id="post-caption" name="caption" rows="3" required></textarea>
+                </div>
+                <div>
+                    <label for="post-image">Image (PNG/JPG):</label>
+                    <input type="file" id="post-image" name="image" accept=".png, .jpg, .jpeg" required>
+                </div>
+                <button type="submit">Create Post</button>
+                <p id="post-status"></p>
+            </form>
+        </section>
+
+        <section id="timeline-feed">
+            <h2>Timeline</h2>
+            <div id="posts-container">
+                <!-- Posts will be loaded here by main.js -->
+                <p>Loading timeline...</p>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
