@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - InstaClone</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <!-- Firebase App (Core) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <!-- Firebase Auth -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <!-- Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <!-- Your Firebase config -->
+    <script src="/static/js/config.js"></script>
+    <!-- firebase-login.js (ASSUMING this library handles UI/listeners) -->
+    <!-- If firebase-login.js is NOT a specific library, you implement login UI/logic below -->
+    <script src="/static/js/firebase-login.js"></script>
+</head>
+<body>
+    <h1>InstaClone</h1>
+
+    <!-- This structure assumes firebase-login.js provides or expects these IDs -->
+    <div id="login-container">
+        <h2>Login / Sign Up</h2>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button id="login-button">Login</button>
+        <button id="signup-button">Sign Up</button>
+        <p id="login-error" class="error-message"></p>
+    </div>
+
+    <div id="user-info" style="display: none;">
+        <p>Welcome, <span id="user-email"></span>!</p>
+        <button id="logout-button">Logout</button>
+        <p>Redirecting...</p>
+    </div>
+
+    <script>
+        // Basic setup assuming firebase-login.js handles the core logic
+        // If firebase-login.js is just a standard setup helper:
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginContainer = document.getElementById('login-container');
+            const userInfoDiv = document.getElementById('user-info');
+            const userEmailSpan = document.getElementById('user-email');
+            const loginButton = document.getElementById('login-button');
+            const signupButton = document.getElementById('signup-button');
+            const logoutButton = document.getElementById('logout-button');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const loginError = document.getElementById('login-error');
+
+            // --- Authentication State Listener ---
+            auth.onAuthStateChanged(async (user) => {
+                loginError.textContent = ''; // Clear errors on state change
+                if (user) {
+                    // User is signed in.
+                    console.log("User logged in:", user.uid);
+                    loginContainer.style.display = 'none';
+                    userInfoDiv.style.display = 'block';
+                    userEmailSpan.textContent = user.email;
+
+                    // Requirement 4: Ensure user model is initialized
+                    // Call backend endpoint to verify token and potentially initialize
+                    try {
+                        const idToken = await user.getIdToken();
+                        const response = await fetch('/api/check_auth', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ idToken: idToken }),
+                        });
+                        const data = await response.json();
+
+                        if (!response.ok) {
+                            console.error("Auth check failed:", data.error);
+                             // Handle error - maybe log out user?
+                            logout(); // Log out if backend check fails
+                        } else {
+                            console.log("Backend auth check successful:", data.message);
+                            // Store essential user info locally if needed (use cautiously)
+                            localStorage.setItem('userUID', data.uid);
+                            localStorage.setItem('username', data.username);
+                            localStorage.setItem('profileName', data.profileName);
+
+                            // Redirect to the main timeline page (index.html)
+                            window.location.href = '/index.html';
+                        }
+                    } catch (error) {
+                        console.error("Error calling /api/check_auth:", error);
+                        loginError.textContent = 'Authentication check failed. Please try again.';
+                        logout(); // Log out on error
+                    }
+
+                } else {
+                    // User is signed out.
+                    console.log("User logged out");
+                    loginContainer.style.display = 'block';
+                    userInfoDiv.style.display = 'none';
+                    localStorage.removeItem('userUID'); // Clear local storage
+                    localStorage.removeItem('username');
+                    localStorage.removeItem('profileName');
+                     // Ensure we are on the login page if logged out
+                    if (window.location.pathname !== '/login.html' && window.location.pathname !== '/') {
+                         window.location.href = '/login.html';
+                    }
+                }
+            });
+
+            // --- Event Listeners ---
+            loginButton.addEventListener('click', () => {
+                const email = emailInput.value;
+                const password = passwordInput.value;
+                loginError.textContent = ''; // Clear previous errors
+                auth.signInWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        // Signed in
+                        console.log("Login successful", userCredential.user);
+                        // onAuthStateChanged will handle the rest
+                    })
+                    .catch((error) => {
+                        console.error("Login Error:", error);
+                        loginError.textContent = error.message;
+                    });
+            });
+
+            signupButton.addEventListener('click', () => {
+                const email = emailInput.value;
+                const password = passwordInput.value;
+                 loginError.textContent = ''; // Clear previous errors
+                auth.createUserWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        // Signed up
+                        console.log("Signup successful", userCredential.user);
+                        // onAuthStateChanged will handle the redirect and backend check
+                        // You might want to prompt for ProfileName here or handle it later
+                    })
+                    .catch((error) => {
+                        console.error("Signup Error:", error);
+                        loginError.textContent = error.message;
+                    });
+            });
+
+            logoutButton.addEventListener('click', logout);
+
+            function logout() {
+                 auth.signOut().then(() => {
+                    console.log('User signed out successfully');
+                    // onAuthStateChanged will handle UI changes and potential redirect
+                 }).catch((error) => {
+                     console.error('Sign out error:', error);
+                 });
+            }
+        });
+    </script>
+</body>
+</html>
