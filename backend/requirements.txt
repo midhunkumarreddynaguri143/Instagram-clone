@@ -1,0 +1,6 @@
+Flask
+google-cloud-firestore
+google-cloud-storage
+firebase-admin
+python-dotenv
+Pillow
